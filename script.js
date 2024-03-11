@@ -35,6 +35,7 @@ else if(oprtr === '/'){
 function displayText(){
     const displayOutput = document.createElement('div');
     const para = document.createElement('p');
+    para.classList.add('paragraph');
     displayOutput.classList.add('display-para');
     const container = document.querySelector('#container');
     displayOutput.appendChild(para);
@@ -48,13 +49,14 @@ document.getElementById('container').appendChild(btnContainer);
 
 function digitBtn(){
     const div = document.createElement('div');
+    div.classList.add('digit-container');
     const btn = document.createElement('button');
     btn.classList.add('digit');
     div.appendChild(btn);
     document.querySelector('.btn-container').appendChild(div);
 }
 function calcBtn(){
-    for(let i=0; i<=15; i++){
+    for(let i=0; i<=16; i++){
         digitBtn();
     };
 }
@@ -66,24 +68,27 @@ function insertTextInBtn(){
     const btnChild = btnContainer.getElementsByClassName('digit');
     
     for(let i=0; i<btnChild.length; i++){
-        for(let j=0; j<=15; j++){
+        for(let j=0; j<=16; j++){
             if(j === 10){
-                btnChild[j].textContent = '➕';
+                btnChild[j].textContent = '+';
             }
             else if(j === 11){
-                btnChild[j].textContent = '➖';
+                btnChild[j].textContent = '-';
             }
             else if(j === 12){
-                btnChild[j].textContent = '✖️';
+                btnChild[j].textContent = '*';
             }
             else if(j === 13){
-                btnChild[j].textContent = '➗';
+                btnChild[j].textContent = '/';
             }
             else if(j === 14){
-                btnChild[j].textContent = '🟰';
+                btnChild[j].textContent = '=';
             }
             else if(j === 15){
-                btnChild[j].textContent = 'Clear';
+                btnChild[j].textContent = '.';
+            }
+            else if(j === 16){
+                btnChild[j].textContent = 'C'
             }
            
             else{
