@@ -23,6 +23,7 @@ body{
     width: 350px;
     height: 100px;
     background-color: #b2b9b7;
+    overflow-x: auto;
 }
 .btn-container{
     display: flex;
