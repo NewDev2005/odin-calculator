@@ -1,22 +1,23 @@
 function add(num1,num2){
-return console.log(num1 + num2);
+return operationResult = num1 + num2;
 };
 
 function substract(num1,num2){
-    return console.log(num1 - num2);
+    return operationResult = num1 - num2;
 };
 
 function product(num1, num2){
-    return console.log(num1 * num2);
+    return operationResult = num1 * num2;
 };
 
 function divide(num1, num2){
-    return console.log(num1 / num2);
+    return operationResult = num1 / num2;
 };
 
 let operator;
 let operand1;
 let operand2;
+let operationResult;
 
 function operate(number1, oprtr, number2){
 if(oprtr === '+'){
@@ -42,8 +43,6 @@ function displayText(){
     container.appendChild(displayOutput);
 }
 displayText();
-
-
 
 const btnContainer = document.createElement('div');
 btnContainer.classList.add('btn-container');
@@ -89,19 +88,42 @@ function insertTextInBtn(){
 }
 insertTextInBtn();
 
-let saveDisplayValue;
+let saveDisplayValue ;
+let result;
+function operation(){
+    
+    let userInput = saveDisplayValue.split('');
+    let changeDataType1  = Number(userInput[0]);
+    let changeDataType2 = Number(userInput[2]);
+    result = operate(changeDataType1,userInput[1],changeDataType2);
+    return result;
+}
 
 function activateBtn(){
+    let concatenate = '';
+    
     const container = document.getElementById('container');
     const btnContainer = container.querySelector('.btn-container');
     const btnChild = btnContainer.getElementsByClassName('digit');
     
     for(let i=0; i<16; i++){
+       if(i === 12){
+        btnChild[i].addEventListener("click", () => {
+         concatenate =  document.querySelector('.paragraph').textContent = operationResult;
+         document.querySelector('.paragraph').textContent = concatenate;
+        });
+       }
+       else {
         btnChild[i].addEventListener("click",() => {
-        document.querySelector('.paragraph').textContent = btnChild[i].textContent; 
+        concatenate += document.querySelector('.paragraph').textContent = btnChild[i].textContent; 
+        document.querySelector('.paragraph').textContent = concatenate;
         saveDisplayValue = document.querySelector('.paragraph').textContent;
         console.log(saveDisplayValue);
+        operation();
         });
     }
-}
+    }
+    }
+    
+
 activateBtn();
