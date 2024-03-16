@@ -90,27 +90,49 @@ insertTextInBtn();
 
 let saveDisplayValue ;
 let result;
+
+function arrangeNum(checkOprtr){
+    let userInput = saveDisplayValue.split(checkOprtr);
+    let operand1  = Number(userInput[0]);
+    let operand2 = Number(userInput[1]);
+    let operator = checkOprtr;
+    return operate(operand1,operator,operand2);
+
+}
 function operation(){
-    
-    let userInput = saveDisplayValue.split('');
-    let changeDataType1  = Number(userInput[0]);
-    let changeDataType2 = Number(userInput[2]);
-    result = operate(changeDataType1,userInput[1],changeDataType2);
+     
+    if(saveDisplayValue.indexOf('+') > 1){
+    result = arrangeNum('+');
+    }
+    else if(saveDisplayValue.indexOf('-') > 1){
+    result = arrangeNum('-');
+    }
+    else if(saveDisplayValue.indexOf('/') > 1){
+    result = arrangeNum('/');
+    }
+    else if(saveDisplayValue.indexOf('*') > 1){
+    result = arrangeNum('*');
+    }
     return result;
 }
 
 function activateBtn(){
     let concatenate = '';
-    
+
     const container = document.getElementById('container');
     const btnContainer = container.querySelector('.btn-container');
     const btnChild = btnContainer.getElementsByClassName('digit');
     
-    for(let i=0; i<16; i++){
+    for(let i=0; i<=16; i++){
        if(i === 12){
         btnChild[i].addEventListener("click", () => {
          concatenate =  document.querySelector('.paragraph').textContent = operationResult;
          document.querySelector('.paragraph').textContent = concatenate;
+        });
+       }
+       else if(i === 16){
+        btnChild[i].addEventListener("click", () => {
+            location.reload();
         });
        }
        else {
