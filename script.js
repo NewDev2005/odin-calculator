@@ -1,6 +1,7 @@
 function add(num1,num2){
-return operationResult = num1 + num2;
-};
+ return operationResult = num1 + num2;
+ 
+}
 
 function substract(num1,num2){
     return operationResult = num1 - num2;
@@ -14,10 +15,14 @@ function divide(num1, num2){
     return operationResult = num1 / num2;
 };
 
-let operator;
-let operand1;
-let operand2;
+let operator;  //some GlobalVariables 
+let operand1 = '';
+let operand2 = '';
 let operationResult;
+let saveDisplayValue ;
+let result;
+let operandArray = [];
+let operatorArray = [];
 
 function operate(number1, oprtr, number2){
 if(oprtr === '+'){
@@ -88,37 +93,17 @@ function insertTextInBtn(){
 }
 insertTextInBtn();
 
-let saveDisplayValue ;
-let result;
-
-function arrangeNum(checkOprtr){
-    let userInput = saveDisplayValue.split(checkOprtr);
-    let operand1  = Number(userInput[0]);
-    let operand2 = Number(userInput[1]);
-    let operator = checkOprtr;
-    return operate(operand1,operator,operand2);
-
-}
 function operation(){
-     
-    if(saveDisplayValue.indexOf('+') > 1){
-    result = arrangeNum('+');
-    }
-    else if(saveDisplayValue.indexOf('-') > 1){
-    result = arrangeNum('-');
-    }
-    else if(saveDisplayValue.indexOf('/') > 1){
-    result = arrangeNum('/');
-    }
-    else if(saveDisplayValue.indexOf('*') > 1){
-    result = arrangeNum('*');
-    }
-    return result;
+    operandArray = [Number(operand1.slice(0,-1)),Number(operand2)];
+    operator = operand1.slice(-1);
+    operatorArray = [operator];
+    operate(operandArray[0],operatorArray[0],operandArray[1]);
 }
+
+let concatenate = '';
 
 function activateBtn(){
-    let concatenate = '';
-
+    
     const container = document.getElementById('container');
     const btnContainer = container.querySelector('.btn-container');
     const btnChild = btnContainer.getElementsByClassName('digit');
@@ -126,26 +111,41 @@ function activateBtn(){
     for(let i=0; i<=16; i++){
        if(i === 12){
         btnChild[i].addEventListener("click", () => {
-         concatenate =  document.querySelector('.paragraph').textContent = operationResult;
-         document.querySelector('.paragraph').textContent = concatenate;
+    
+         document.querySelector('.paragraph').textContent = operationResult;
+         
         });
-       }
+    }
        else if(i === 16){
-        btnChild[i].addEventListener("click", () => {
+        btnChild[i].addEventListener("click", () => {  
             location.reload();
         });
        }
        else {
         btnChild[i].addEventListener("click",() => {
-        concatenate += document.querySelector('.paragraph').textContent = btnChild[i].textContent; 
-        document.querySelector('.paragraph').textContent = concatenate;
-        saveDisplayValue = document.querySelector('.paragraph').textContent;
-        console.log(saveDisplayValue);
-        operation();
+            
+            if(operand1.endsWith('+')){
+                operand2 += btnChild[i].textContent;
+            }
+            else if(operand1.endsWith('-')){
+                operand2 += btnChild[i].textContent;
+            }
+            else if(operand1.endsWith('*')){
+                operand2 += btnChild[i].textContent;
+            }
+            else if(operand1.endsWith('/')){
+                operand2 += btnChild[i].textContent;
+            }
+            else{
+                operand1 += btnChild[i].textContent;    
+            }
+            console.log(operand1);
+            console.log(operand2);
+            operation();
+            document.querySelector('.paragraph').textContent = operand1 + operand2;
+        
         });
     }
     }
     }
-    
-
 activateBtn();
