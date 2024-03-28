@@ -94,23 +94,24 @@ function insertTextInBtn(){
 insertTextInBtn();
 
 function operation(){
+    if(operand1.match(/\D$/) !== null){
+        operand1 = operand1.replace(/\D$/,'');
 
-    operandArray = [Number(operand1.replace(/\D$/,'')),Number(operand2)];
+    operandArray = [Number(operand1),Number(operand2)];
     operatorArray = [operator];
+    } 
+    else{
+        operandArray = [Number(operand1),Number(operand2)];
+        operatorArray = [operator];
+    }
 
     if(operatorArray[0] !== undefined && operandArray[1] !== undefined){
     return operate(operandArray[0],operatorArray[0],operandArray[1]);
     }
 }
 
-let concatenate = '';
 
-function afterEvaluation(){
-    if(operationResult !== undefined){
-        operand1 = operationResult;
-        operand2 = '';
-    }
-}
+let concatenate = '';
 
 function activateBtn(){
     
@@ -122,7 +123,7 @@ function activateBtn(){
        if(i === 12){
         btnChild[i].addEventListener("click", () => {
             operation();
-            afterEvaluation();
+            operand2 = '';
             concatenate =  document.querySelector('.paragraph').textContent = operationResult;
             document.querySelector('.paragraph').textContent = concatenate; 
         });
@@ -136,31 +137,32 @@ function activateBtn(){
         btnChild[i].addEventListener("click",() => {
             
           if(operationResult === undefined){
-            if(operand1.endsWith('+')){
+            if(operand1.match(/[+]/g) !== null){
                 operand2 += btnChild[i].textContent.replace(/[+]/g,'').replace(/[*]/g,'').replace(/['/']/g,'').replace(/['-']/g,'');
                 operator = '+';
             }
-            else if(operand1.endsWith('-')){
+            else if(operand1.match(/[-]/g) !== null){
                 operand2 += btnChild[i].textContent.replace(/[+]/g,'').replace(/[*]/g,'').replace(/['/']/g,'').replace(/['-']/g,'');
                 operator = '-';
             }
-            else if(operand1.endsWith('*')){
+            else if(operand1.match(/[*]/g) !== null){
                 operand2 += btnChild[i].textContent.replace(/[+]/g,'').replace(/[*]/g,'').replace(/['/']/g,'').replace(/['-']/g,'');
                 operator = '*';
             }
-            else if(operand1.endsWith('/')){
+            else if(operand1.match(/[/]/g) !== null){
                 operand2 += btnChild[i].textContent.replace(/[+]/g,'').replace(/[*]/g,'').replace(/['/']/g,'').replace(/['-']/g,'');
                 operator = '/';
             }
             else{
-                operand1 += btnChild[i].textContent;    
+                operand1 += btnChild[i].textContent; 
+
             }
           }
           else{
-            operand2 += btnChild[i].textContent.replace(/[+]/g,'').replace(/[*]/g,'').replace(/['/']/g,'').replace(/['-']/g,'');
+            operand1 = String(operationResult);
+            operand2 += btnChild[i].textContent.replace(/[+]$/,'').replace(/[*]$/,'').replace(/['/']$/,'').replace(/['-']$/,'');
+           
           }
-            
-            
             console.log(operand1);
             console.log(operand2);
             concatenate += document.querySelector('.paragraph').textContent = btnChild[i].textContent; 
