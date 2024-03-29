@@ -15,7 +15,7 @@ function divide(num1, num2){
     return operationResult = num1 / num2;
 };
 
-let operator;  //some GlobalVariables 
+let operator = '';  //some GlobalVariables 
 let operand1 = '';
 let operand2 = '';
 let operationResult;
@@ -110,6 +110,70 @@ function operation(){
     }
 }
 
+function operatorAfterEval(){
+    const container = document.getElementById('container');
+    const btnContainer = container.querySelector('.btn-container');
+    const btnChild = btnContainer.getElementsByClassName('digit');
+
+    for(let i=10; i<=14; i++){
+        if(i === 10 && operator === ''){
+            btnChild[i].addEventListener("click",() => {
+                operator = btnChild[i].textContent;
+            });
+        }
+        else if( i === 11 && operator === ''){
+            btnChild[i].addEventListener("click",() => {
+                operator = btnChild[i].textContent;
+            });
+        }
+        else if(i === 12){continue;}
+    
+        else if(i === 13 && operator === ''){
+            btnChild[i].addEventListener("click",() => {
+                operator = btnChild[i].textContent;
+            });
+        }
+        else if(i == 14 && operator === ''){
+            btnChild[i].addEventListener("click",() => {
+                operator = btnChild[i].textContent;
+            })
+        }  
+    }
+}
+function disableEqualToBtn(){
+    const container = document.getElementById('container');
+    const btnContainer = container.querySelector('.btn-container');
+    const btnChild = btnContainer.getElementsByClassName('digit');
+    if(operator === '' && operand2 === ''){
+        btnChild[12].disabled = true;
+       
+    }
+    else{
+        btnChild[12].disabled = false;
+    }
+   
+}
+function afterFirstEval(){
+    const container = document.getElementById('container');
+    const btnContainer = container.querySelector('.btn-container');
+    const btnChild = btnContainer.getElementsByClassName('digit');
+
+    if(operator !== '' && operand2 !== ''){
+        for(let i=10; i<=14; i++){
+            if(i === 12){continue;}
+            else {
+                btnChild[i].addEventListener("click",() => {
+                    operation();
+                    operand1 = String(operationResult);
+                    operator = btnChild[i].textContent;
+                    operand2 = '';
+                    concatenate = operationResult+operator;
+                    document.querySelector('.paragraph').textContent = concatenate;
+                })
+            }
+        }
+    }
+}
 
 let concatenate = '';
 
@@ -123,13 +187,22 @@ function activateBtn(){
        if(i === 12){
         btnChild[i].addEventListener("click", () => {
             operation();
+            operator = '';
             operand2 = '';
+            operatorAfterEval();
             concatenate =  document.querySelector('.paragraph').textContent = operationResult;
             document.querySelector('.paragraph').textContent = concatenate; 
+           
+           
         });
     }
        else if(i === 16){
         btnChild[i].addEventListener("click", () => {  
+            // operand1 = '';
+            // operator = '';
+            // operand2 = '';
+            // concatenate = '';
+            // document.querySelector('.paragraph').textContent = concatenate;
             location.reload();
         });
        }
@@ -155,19 +228,19 @@ function activateBtn(){
             }
             else{
                 operand1 += btnChild[i].textContent; 
-
             }
           }
-          else{
+          else if(operationResult !== undefined && operator !== ''){
             operand1 = String(operationResult);
             operand2 += btnChild[i].textContent.replace(/[+]$/,'').replace(/[*]$/,'').replace(/['/']$/,'').replace(/['-']$/,'');
-           
           }
             console.log(operand1);
+            console.log(operator);
             console.log(operand2);
+            disableEqualToBtn();
+            afterFirstEval();
             concatenate += document.querySelector('.paragraph').textContent = btnChild[i].textContent; 
             document.querySelector('.paragraph').textContent = concatenate;
-            
         });
     }
     }
