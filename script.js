@@ -139,7 +139,18 @@ function operatorAfterEval(){
         }  
     }
 }
+function disableOprtBtnBeforeOperand1(){
+    const container = document.getElementById('container');
+    const btnContainer = container.querySelector('.btn-container');
+    const btnChild = btnContainer.getElementsByClassName('digit');
 
+    if(operand1 === ''){
+        btnChild[10].disabled = true;
+        btnChild[11].disabled = true;
+        btnChild[13].disabled = true;
+        btnChild[14].disabled = true;
+    }
+}
 function disableOprtBtn(){
     const container = document.getElementById('container');
     const btnContainer = container.querySelector('.btn-container');
@@ -170,29 +181,6 @@ function disableEqualToBtn(){
         btnChild[12].disabled = false;
     }
    
-}
-function afterFirstEval(){
-
-    const container = document.getElementById('container');
-    const btnContainer = container.querySelector('.btn-container');
-    const btnChild = btnContainer.getElementsByClassName('digit');
-
-    if(operator !== '' && operand2 !== ''){
-        for(let i=10; i<=14; i++){
-            if(i === 12){continue;}
-            else {
-                btnChild[i].addEventListener("click",() => {
-                    operand2 = operand2.replace(/\D$/,'');
-                    operation();
-                    operand1 = String(operationResult);
-                    operator = btnChild[i].textContent;
-                    operand2 = '';
-                    concatenate = operationResult+operator;
-                    document.querySelector('.paragraph').textContent = concatenate;
-                });
-            }
-        }
-    }
 }
 
 let concatenate = '';
@@ -248,6 +236,7 @@ function activateBtn(){
             operand1 = String(operationResult);
             operand2 += btnChild[i].textContent.replace(/[+]$/,'').replace(/[*]$/,'').replace(/['/']$/,'').replace(/['-']$/,'');
           }
+
             console.log(operand1);
             console.log(operator);
             console.log(operand2);
@@ -261,4 +250,5 @@ function activateBtn(){
     }
     }
 activateBtn();
+disableOprtBtnBeforeOperand1();
 
