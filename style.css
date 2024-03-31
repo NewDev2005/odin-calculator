@@ -49,3 +49,9 @@ body{
     font-size: 25px;
     margin-right: 10px;
 }
+button:hover{
+    transform: scale(1.2);
+}
+.digit{
+    transition-duration: 90ms;
+}
