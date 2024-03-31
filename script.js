@@ -96,7 +96,6 @@ insertTextInBtn();
 function operation(){
     if(operand1.match(/\D$/) !== null){
         operand1 = operand1.replace(/\D$/,'');
-
     operandArray = [Number(operand1),Number(operand2)];
     operatorArray = [operator];
     } 
@@ -104,7 +103,7 @@ function operation(){
         operandArray = [Number(operand1),Number(operand2)];
         operatorArray = [operator];
     }
-
+   
     if(operatorArray[0] !== undefined && operandArray[1] !== undefined){
     return operate(operandArray[0],operatorArray[0],operandArray[1]);
     }
@@ -154,6 +153,7 @@ function disableEqualToBtn(){
    
 }
 function afterFirstEval(){
+
     const container = document.getElementById('container');
     const btnContainer = container.querySelector('.btn-container');
     const btnChild = btnContainer.getElementsByClassName('digit');
@@ -163,13 +163,14 @@ function afterFirstEval(){
             if(i === 12){continue;}
             else {
                 btnChild[i].addEventListener("click",() => {
+                    operand2 = operand2.replace(/\D$/,'');
                     operation();
                     operand1 = String(operationResult);
                     operator = btnChild[i].textContent;
                     operand2 = '';
                     concatenate = operationResult+operator;
                     document.querySelector('.paragraph').textContent = concatenate;
-                })
+                });
             }
         }
     }
@@ -192,17 +193,10 @@ function activateBtn(){
             operatorAfterEval();
             concatenate =  document.querySelector('.paragraph').textContent = operationResult;
             document.querySelector('.paragraph').textContent = concatenate; 
-           
-           
         });
     }
        else if(i === 16){
         btnChild[i].addEventListener("click", () => {  
-            // operand1 = '';
-            // operator = '';
-            // operand2 = '';
-            // concatenate = '';
-            // document.querySelector('.paragraph').textContent = concatenate;
             location.reload();
         });
        }
@@ -234,11 +228,12 @@ function activateBtn(){
             operand1 = String(operationResult);
             operand2 += btnChild[i].textContent.replace(/[+]$/,'').replace(/[*]$/,'').replace(/['/']$/,'').replace(/['-']$/,'');
           }
+
             console.log(operand1);
             console.log(operator);
             console.log(operand2);
-            disableEqualToBtn();
             afterFirstEval();
+            disableEqualToBtn();
             concatenate += document.querySelector('.paragraph').textContent = btnChild[i].textContent; 
             document.querySelector('.paragraph').textContent = concatenate;
         });
@@ -246,3 +241,4 @@ function activateBtn(){
     }
     }
 activateBtn();
+
