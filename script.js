@@ -25,7 +25,7 @@ let operandArray = [];
 let operatorArray = [];
 
 function operate(number1, oprtr, number2){
-if(oprtr === '+'){
+if(oprtr === '+' ){ 
  return add(number1,number2);
 }
 else if(oprtr === '-'){
@@ -139,6 +139,25 @@ function operatorAfterEval(){
         }  
     }
 }
+
+function disableOprtBtn(){
+    const container = document.getElementById('container');
+    const btnContainer = container.querySelector('.btn-container');
+    const btnChild = btnContainer.getElementsByClassName('digit');
+
+    if(operator !== ''){
+        btnChild[10].disabled = true;
+        btnChild[11].disabled = true;
+        btnChild[13].disabled = true;
+        btnChild[14].disabled = true;
+    }
+    else{
+        btnChild[10].disabled = false;
+        btnChild[11].disabled = false;
+        btnChild[13].disabled = false;
+        btnChild[14].disabled = false;
+    }
+}
 function disableEqualToBtn(){
     const container = document.getElementById('container');
     const btnContainer = container.querySelector('.btn-container');
@@ -190,6 +209,7 @@ function activateBtn(){
             operation();
             operator = '';
             operand2 = '';
+            disableOprtBtn();
             operatorAfterEval();
             concatenate =  document.querySelector('.paragraph').textContent = operationResult;
             document.querySelector('.paragraph').textContent = concatenate; 
@@ -228,12 +248,12 @@ function activateBtn(){
             operand1 = String(operationResult);
             operand2 += btnChild[i].textContent.replace(/[+]$/,'').replace(/[*]$/,'').replace(/['/']$/,'').replace(/['-']$/,'');
           }
-
             console.log(operand1);
             console.log(operator);
             console.log(operand2);
-            afterFirstEval();
+            disableOprtBtn();
             disableEqualToBtn();
+            
             concatenate += document.querySelector('.paragraph').textContent = btnChild[i].textContent; 
             document.querySelector('.paragraph').textContent = concatenate;
         });
